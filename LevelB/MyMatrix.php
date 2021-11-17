@@ -78,13 +78,25 @@ class MyMatrix
      * This function replaces a column (i) and a line (j) with '0',
      * if the (i, j) cell equals to '0'
      *
-     * @TODO
+     * @ TODO
      * @return $this
      */
     public function fillZero()
     {
         /** @TODO */
-
+        $ref_matrix = $this->matrix;
+        for ($i = 0; $i < $this->iMax; ++$i) {
+            for ($j = 0; $j < $this->jMax; ++$j) {
+                if ($ref_matrix[$i][$j] == 0) {
+                    for ($it = 0; $it < $this->iMax; ++$it) {
+                        $this->matrix[$it][$j] = 0;
+                    }
+                    for ($it = 0; $it < $this->jMax; ++$it) {
+                        $this->matrix[$i][$it] = 0;
+                    }
+                }
+            }
+        }
         return $this;
     }
 }
