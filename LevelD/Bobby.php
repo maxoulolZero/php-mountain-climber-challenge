@@ -23,8 +23,43 @@ class Bobby
     public function giveMoney($price)
     {
         /** @TODO */
-
-        return false;
+        if ($price > $this->total) {
+            return false;
+        }
+        $tmp = array();
+        foreach ($this->wallet as $element) {
+            if (is_numeric($element)) {
+                array_push($tmp, $element);
+            }
+        }
+        $copy = $this->wallet;
+        sort($tmp, SORT_NUMERIC);
+        $this->wallet = array_reverse($tmp);
+        $index = 0;
+        while ($price > 0) {
+            if ($index == count($this->wallet)) {
+                $price -= $this->wallet[$index - 1];
+                array_splice($this->wallet, $index - 1, 1);
+                $index = 0;
+            } else if ($index != 0 && $this->wallet[$index] <= $price) {
+                $price -= $this->wallet[$index - 1];
+                array_splice($this->wallet, $index - 1, 1);
+                $index = 0;
+            } else if ($index == 0) {
+                $price -= $this->wallet[$index];
+                array_splice($this->wallet, $index, 1);
+                $index = 0;
+            } else {
+                $index++;
+            }
+        }
+        foreach ($copy as $element) {
+            if (!is_numeric($element)) {
+                array_push($this->wallet, $element);
+            }
+        }
+        $this->computeTotal();
+        return true;
     }
 
     /**
