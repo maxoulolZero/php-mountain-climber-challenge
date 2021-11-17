@@ -21,8 +21,9 @@ class Palindrome
     public function generatePalindrome()
     {
         /** @TODO */
-
-        return 'abccba';
+        if ($this->str == utf8_encode(strrev(utf8_decode($this->str)))) {
+            return $this->str;
+        }
+        return $this->str . utf8_encode(strrev(utf8_decode($this->str)));
     }
-
 }
